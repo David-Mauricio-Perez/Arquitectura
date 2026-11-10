@@ -95,7 +95,13 @@ def login(form: Annotated[OAuth2PasswordRequestForm, Depends()]) -> JSONResponse
         case sch.OutputStatus(status='successfully_logged_in'):
             log.info(f'User logged in: {credentials.id}')
             status_code = status.HTTP_200_OK
-    return JSONResponse(content=login_status.model_dump(), status_code=status_code)
+    response_content = login_status.model_dump()
+    if login_status.status in ('successfully_logged_in', 'user_already_logged_in'):
+        token_val = (login_status.details.data or {}).get('token') or (login_status.details.data or {}).get('new_token')
+        if token_val:
+            response_content['access_token'] = token_val
+            response_content['token_type'] = 'bearer'
+    return JSONResponse(content=response_content, status_code=status_code)
 
 # ==================================================================================================
 #  Email confirmation functionality

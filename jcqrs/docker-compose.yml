@@ -1,0 +1,9 @@
+services:
+  jcqrs-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: jcqrs-service
+    ports:
+      - "9898:9898"
+    restart: unless-stopped
