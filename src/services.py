@@ -968,7 +968,7 @@ def notify_recipe_review(
     notification = sch.Notification(
         event_name='recipe-reviewed',
         user_id=review_event.user_id,
-        data=review_event.model_dump()
+        data=review_event.model_dump(mode='json')
     )
 
     notifications_manager.put(user_id=review_event.user_id, data=notification.model_dump())
