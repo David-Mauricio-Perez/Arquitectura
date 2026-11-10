@@ -14,152 +14,333 @@ public class HomeController {
         <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>JCQRS - Patrón CQRS en Spring Boot</title>
+            <title>JCQRS - Patrón CQRS con Terminal Web</title>
             <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
             <style>
-                body { background-color: #f4f6f9; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-                .hero { background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white; padding: 2.5rem 1rem; border-radius: 0 0 1rem 1rem; margin-bottom: 2rem; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
-                .card { border-radius: 0.75rem; border: none; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 1.5rem; }
-                .badge-query { background-color: #0d6efd; }
-                .badge-command { background-color: #198754; }
-                pre { background: #212529; color: #f8f9fa; padding: 1rem; border-radius: 0.5rem; max-height: 400px; overflow-y: auto; }
+                body { background-color: #0f172a; color: #e2e8f0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+                .hero { background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 1.75rem 1rem; border-bottom: 1px solid #334155; }
+                .card { background-color: #1e293b; border: 1px solid #334155; border-radius: 0.75rem; color: #e2e8f0; }
+                
+                /* Terminal Styles */
+                .terminal-window {
+                    background-color: #000000;
+                    border: 1px solid #334155;
+                    border-radius: 0.5rem;
+                    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+                    overflow: hidden;
+                    font-family: 'Consolas', 'Courier New', monospace;
+                }
+                .terminal-header {
+                    background-color: #1e293b;
+                    padding: 8px 14px;
+                    display: flex;
+                    align-items: center;
+                    border-bottom: 1px solid #334155;
+                }
+                .terminal-btn { width: 12px; height: 12px; border-radius: 50%; display: inline-block; margin-right: 6px; }
+                .btn-red { background-color: #ff5f56; }
+                .btn-yellow { background-color: #ffbd2e; }
+                .btn-green { background-color: #27c93f; }
+                .terminal-title { margin-left: 10px; font-size: 0.85rem; color: #94a3b8; }
+                
+                .terminal-body {
+                    padding: 14px;
+                    height: 480px;
+                    overflow-y: auto;
+                    font-size: 0.92rem;
+                    line-height: 1.5;
+                }
+                .term-prompt { color: #38bdf8; font-weight: bold; }
+                .term-cmd { color: #f8fafc; font-weight: 600; }
+                .term-out { color: #cbd5e1; margin-bottom: 8px; white-space: pre-wrap; word-break: break-all; }
+                .term-success { color: #4ade80; }
+                .term-error { color: #f87171; }
+                .term-info { color: #38bdf8; }
+                .term-warn { color: #facc15; }
+
+                .terminal-input-line {
+                    display: flex;
+                    align-items: center;
+                    margin-top: 4px;
+                }
+                .terminal-input {
+                    background: transparent;
+                    border: none;
+                    outline: none;
+                    color: #f8fafc;
+                    font-family: inherit;
+                    font-size: inherit;
+                    flex-grow: 1;
+                    margin-left: 8px;
+                }
+                .btn-action { font-size: 0.8rem; }
             </style>
         </head>
         <body>
             <div class="hero text-center">
-                <h1 class="fw-bold">🚀 JCQRS - Servicio CQRS Activo</h1>
-                <p class="lead mb-0">Demostración del patrón <strong>Command Query Responsibility Segregation (CQRS)</strong> con Mediator en Java Spring Boot</p>
+                <h2 class="fw-bold text-white mb-1">🚀 JCQRS - Terminal Web & Consola Interactiva</h2>
+                <p class="text-secondary mb-0 small">Ejecuta comandos CLI, peticiones <code>curl</code> y operaciones CQRS directamente desde la interfaz web</p>
             </div>
 
-            <div class="container pb-5">
-                <div class="row">
-                    <!-- Panel de Controles / Endpoints -->
-                    <div class="col-lg-6">
-                        <!-- Entidad Productos -->
-                        <div class="card p-3">
-                            <h4 class="text-primary fw-bold">📦 Entidad: Productos (Nueva Entidad)</h4>
-                            <p class="text-muted small">Operaciones segregadas entre consultas (lectura) y comandos (escritura):</p>
-                            
-                            <div class="d-flex flex-wrap gap-2 mb-3">
-                                <button class="btn btn-outline-primary btn-sm" onclick="runRequest('/productos', 'GET')">
-                                    <span class="badge badge-query">Query</span> GET Todos
+            <div class="container-fluid px-4 py-3">
+                <div class="row g-3">
+                    <!-- Columna de Botones / Atajos Rápidos -->
+                    <div class="col-lg-4">
+                        <!-- Card Productos -->
+                        <div class="card p-3 mb-3">
+                            <h5 class="text-info fw-bold mb-2">📦 Comandos Rápidos: Productos</h5>
+                            <p class="text-secondary small mb-2">Haz clic para escribir y ejecutar el comando en la terminal:</p>
+                            <div class="d-flex flex-column gap-2">
+                                <button class="btn btn-outline-info btn-sm text-start btn-action" onclick="typeAndRun('curl http://localhost:9898/productos')">
+                                    <code>curl http://localhost:9898/productos</code>
                                 </button>
-                                <button class="btn btn-outline-primary btn-sm" onclick="runRequest('/productos/1', 'GET')">
-                                    <span class="badge badge-query">Query</span> GET ID: 1
+                                <button class="btn btn-outline-info btn-sm text-start btn-action" onclick="typeAndRun('curl http://localhost:9898/productos/1')">
+                                    <code>curl http://localhost:9898/productos/1</code>
                                 </button>
-                                <button class="btn btn-outline-success btn-sm" onclick="crearProductoDemo()">
-                                    <span class="badge badge-command">Command</span> POST Agregar
+                                <button class="btn btn-outline-success btn-sm text-start btn-action" onclick="typeAndRun('curl -X POST http://localhost:9898/productos/add -d {\\\"nombre\\\":\\\"Mouse MX Master\\\",\\\"categoria\\\":\\\"Perifericos\\\",\\\"precio\\\":99.99,\\\"stock\\\":25,\\\"descripcion\\\":\\\"Mouse ergonomico\\\"}')">
+                                    <code>curl -X POST /productos/add ...</code>
                                 </button>
-                                <button class="btn btn-outline-warning btn-sm" onclick="actualizarProductoDemo()">
-                                    <span class="badge badge-command">Command</span> PUT Actualizar
+                                <button class="btn btn-outline-warning btn-sm text-start btn-action" onclick="typeAndRun('curl -X PUT http://localhost:9898/productos/update -d {\\\"id\\\":4,\\\"nombre\\\":\\\"Mouse MX Master Pro\\\",\\\"categoria\\\":\\\"Perifericos\\\",\\\"precio\\\":119.99,\\\"stock\\\":20,\\\"descripcion\\\":\\\"Edicion Pro\\\"}')">
+                                    <code>curl -X PUT /productos/update ...</code>
                                 </button>
-                                <button class="btn btn-outline-danger btn-sm" onclick="runRequest('/productos/delete/4', 'DELETE')">
-                                    <span class="badge badge-command">Command</span> DELETE ID: 4
+                                <button class="btn btn-outline-danger btn-sm text-start btn-action" onclick="typeAndRun('curl -X DELETE http://localhost:9898/productos/delete/4')">
+                                    <code>curl -X DELETE /productos/delete/4</code>
                                 </button>
-                            </div>
-                            <div class="small">
-                                <strong>Enlaces directos:</strong> 
-                                <a href="/productos" target="_blank" class="ms-1">/productos</a> | 
-                                <a href="/productos/1" target="_blank" class="ms-1">/productos/1</a>
                             </div>
                         </div>
 
-                        <!-- Entidad Clientes -->
+                        <!-- Card Clientes -->
+                        <div class="card p-3 mb-3">
+                            <h5 class="text-success fw-bold mb-2">👥 Comandos Rápidos: Clientes</h5>
+                            <div class="d-flex flex-column gap-2">
+                                <button class="btn btn-outline-success btn-sm text-start btn-action" onclick="typeAndRun('curl http://localhost:9898/clientes')">
+                                    <code>curl http://localhost:9898/clientes</code>
+                                </button>
+                                <button class="btn btn-outline-success btn-sm text-start btn-action" onclick="typeAndRun('curl http://localhost:9898/clientes/1')">
+                                    <code>curl http://localhost:9898/clientes/1</code>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Ayuda de Comandos -->
                         <div class="card p-3">
-                            <h4 class="text-success fw-bold">👥 Entidad: Clientes (Entidad Base)</h4>
-                            <p class="text-muted small">Implementación del patrón CQRS para clientes:</p>
-                            
-                            <div class="d-flex flex-wrap gap-2 mb-3">
-                                <button class="btn btn-outline-primary btn-sm" onclick="runRequest('/clientes', 'GET')">
-                                    <span class="badge badge-query">Query</span> GET Todos
-                                </button>
-                                <button class="btn btn-outline-primary btn-sm" onclick="runRequest('/clientes/1', 'GET')">
-                                    <span class="badge badge-query">Query</span> GET ID: 1
-                                </button>
-                            </div>
-                            <div class="small">
-                                <strong>Enlaces directos:</strong> 
-                                <a href="/clientes" target="_blank" class="ms-1">/clientes</a> | 
-                                <a href="/clientes/1" target="_blank" class="ms-1">/clientes/1</a>
-                            </div>
+                            <h6 class="text-secondary fw-bold mb-2">💡 Comandos de la Terminal</h6>
+                            <ul class="small text-secondary mb-0 ps-3">
+                                <li><code>help</code>: Ver guía de comandos</li>
+                                <li><code>curl &lt;url&gt;</code>: Ejecutar petición HTTP</li>
+                                <li><code>clear</code>: Limpiar pantalla</li>
+                                <li><code>status</code>: Estado del servidor</li>
+                            </ul>
                         </div>
                     </div>
 
-                    <!-- Panel de Respuestas en Vivo -->
-                    <div class="col-lg-6">
-                        <div class="card p-3 h-100">
-                            <div class="d-flex justify-content-between align-items-center mb-2">
-                                <h5 class="fw-bold mb-0">Consola de Respuesta HTTP</h5>
-                                <span id="statusBadge" class="badge bg-secondary">Esperando solicitud...</span>
+                    <!-- Columna de la Terminal Web Interactiva -->
+                    <div class="col-lg-8">
+                        <div class="terminal-window" onclick="document.getElementById('termInput').focus()">
+                            <div class="terminal-header">
+                                <span class="terminal-btn btn-red"></span>
+                                <span class="terminal-btn btn-yellow"></span>
+                                <span class="terminal-btn btn-green"></span>
+                                <span class="terminal-title">jcqrs-bash -- 9898 (http)</span>
                             </div>
-                            <div class="text-muted small mb-2" id="requestInfo">Haz clic en cualquier botón de la izquierda para probar el flujo.</div>
-                            <pre id="responseJson">// Aquí se mostrará la respuesta en formato JSON</pre>
+                            <div class="terminal-body" id="termBody">
+                                <div class="term-out term-info">========================================================================
+ 💻 JCQRS Web Terminal v1.0 [Spring Boot 3.5.3 - Java 17]
+ Escribe 'help' para ver los comandos soportados o usa 'curl'.
+ Usa las flechas ARRIBA/ABAJO para navegar el historial de comandos.
+========================================================================</div>
+                                <div id="termHistory"></div>
+                                <div class="terminal-input-line">
+                                    <span class="term-prompt">jcqrs@server:~$</span>
+                                    <input type="text" id="termInput" class="terminal-input" autofocus autocomplete="off" spellcheck="false">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <script>
-                async function runRequest(url, method, body = null) {
-                    const statusBadge = document.getElementById('statusBadge');
-                    const requestInfo = document.getElementById('requestInfo');
-                    const responseJson = document.getElementById('responseJson');
+                const termInput = document.getElementById('termInput');
+                const termHistory = document.getElementById('termHistory');
+                const termBody = document.getElementById('termBody');
+                
+                const commandHistory = [];
+                let historyIndex = -1;
 
-                    statusBadge.className = 'badge bg-warning text-dark';
-                    statusBadge.innerText = 'Enviando...';
-                    requestInfo.innerText = `${method} ${url}`;
-                    responseJson.innerText = 'Cargando datos...';
+                termInput.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        const cmd = this.value.trim();
+                        if (cmd) {
+                            commandHistory.push(cmd);
+                            historyIndex = commandHistory.length;
+                            executeCommand(cmd);
+                        } else {
+                            printOutput('', '');
+                        }
+                        this.value = '';
+                        termBody.scrollTop = termBody.scrollHeight;
+                    } else if (e.key === 'ArrowUp') {
+                        if (historyIndex > 0) {
+                            historyIndex--;
+                            this.value = commandHistory[historyIndex];
+                        }
+                        e.preventDefault();
+                    } else if (e.key === 'ArrowDown') {
+                        if (historyIndex < commandHistory.length - 1) {
+                            historyIndex++;
+                            this.value = commandHistory[historyIndex];
+                        } else {
+                            historyIndex = commandHistory.length;
+                            this.value = '';
+                        }
+                        e.preventDefault();
+                    }
+                });
+
+                function printOutput(cmd, outputHtml) {
+                    const line = document.createElement('div');
+                    line.innerHTML = `<div><span class="term-prompt">jcqrs@server:~$</span> <span class="term-cmd">${escapeHtml(cmd)}</span></div>${outputHtml}`;
+                    termHistory.appendChild(line);
+                    termBody.scrollTop = termBody.scrollHeight;
+                }
+
+                function escapeHtml(text) {
+                    return text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+                }
+
+                function typeAndRun(cmd) {
+                    termInput.value = cmd;
+                    termInput.focus();
+                    commandHistory.push(cmd);
+                    historyIndex = commandHistory.length;
+                    executeCommand(cmd);
+                    termInput.value = '';
+                }
+
+                async function executeCommand(cmd) {
+                    const trimmed = cmd.trim();
+                    const parts = trimmed.split(/\\s+/);
+                    const mainCmd = parts[0].toLowerCase();
+
+                    if (mainCmd === 'clear') {
+                        termHistory.innerHTML = '';
+                        return;
+                    }
+
+                    if (mainCmd === 'help') {
+                        const helpHtml = `<div class="term-out term-info">
+Comandos disponibles:
+  curl &lt;url&gt;                      Petición GET (ej: curl http://localhost:9898/productos)
+  curl -X POST &lt;url&gt; -d &lt;json&gt;     Petición POST con cuerpo JSON
+  curl -X PUT &lt;url&gt; -d &lt;json&gt;      Petición PUT con cuerpo JSON
+  curl -X DELETE &lt;url&gt;             Petición DELETE
+  status                            Verifica el estado del servicio y puertos
+  clear                             Limpia la pantalla de la terminal
+  help                              Muestra esta ayuda</div>`;
+                        printOutput(cmd, helpHtml);
+                        return;
+                    }
+
+                    if (mainCmd === 'status') {
+                        const statusHtml = `<div class="term-out term-success">
+● jcqrs-service.service - CQRS Spring Boot Server
+     Loaded: loaded (/app/app.jar)
+     Active: active (running)
+     Port:   9898 (Tomcat)
+     Java:   OpenJDK 17
+     Capa:   com.jcqrslib.jcqrs.data (static ArrayList)</div>`;
+                        printOutput(cmd, statusHtml);
+                        return;
+                    }
+
+                    if (mainCmd === 'curl') {
+                        await handleCurl(cmd);
+                        return;
+                    }
+
+                    printOutput(cmd, `<div class="term-out term-error">Comando no reconocido: '${escapeHtml(mainCmd)}'. Escribe 'help' para ver los comandos soportados.</div>`);
+                }
+
+                async function handleCurl(cmd) {
+                    let method = 'GET';
+                    let url = '';
+                    let bodyData = null;
+
+                    // Parse basic curl command flags (-X, -d, URL)
+                    const xIndex = cmd.indexOf('-X ');
+                    if (xIndex !== -1) {
+                        const afterX = cmd.substring(xIndex + 3).trim();
+                        method = afterX.split(/\\s+/)[0].toUpperCase();
+                    }
+
+                    const dIndex = cmd.indexOf('-d ');
+                    if (dIndex !== -1) {
+                        let rest = cmd.substring(dIndex + 3).trim();
+                        let rawJson = '';
+                        if (rest.startsWith('{') || rest.startsWith('"{') || rest.startsWith("'{")) {
+                            const startChar = rest.charAt(0);
+                            if (startChar === '"' || startChar === "'") {
+                                const endQuote = rest.lastIndexOf(startChar);
+                                rawJson = rest.substring(1, endQuote);
+                            } else {
+                                rawJson = rest;
+                            }
+                        }
+                        try {
+                            // Limpiar escapes si existen
+                            const unescaped = rawJson.replace(/\\\\"/g, '"');
+                            bodyData = JSON.parse(unescaped);
+                        } catch (e) {
+                            printOutput(cmd, `<div class="term-out term-error">Error parseando JSON del parámetro -d: ${escapeHtml(e.message)}</div>`);
+                            return;
+                        }
+                    }
+
+                    // Extract URL
+                    const tokens = cmd.split(/\\s+/);
+                    for (let token of tokens) {
+                        if (token.startsWith('http://') || token.startsWith('https://') || token.startsWith('/')) {
+                            url = token.replace(/['"]/g, '');
+                            break;
+                        }
+                    }
+
+                    if (!url) {
+                        printOutput(cmd, `<div class="term-out term-error">Uso: curl [-X METHOD] &lt;URL&gt; [-d '&lt;JSON&gt;']</div>`);
+                        return;
+                    }
 
                     try {
                         const options = { method: method };
-                        if (body) {
+                        if (bodyData) {
                             options.headers = { 'Content-Type': 'application/json' };
-                            options.body = JSON.stringify(body);
+                            options.body = JSON.stringify(bodyData);
                         }
-                        const res = await fetch(url, options);
-                        const status = res.status;
-                        
-                        statusBadge.className = res.ok ? 'badge bg-success' : 'badge bg-danger';
-                        statusBadge.innerText = `HTTP ${status} ${res.statusText}`;
 
-                        if (status === 204) {
-                            responseJson.innerText = '// 204 No Content (Operación exitosa sin cuerpo de retorno)';
+                        const startTime = performance.now();
+                        const response = await fetch(url, options);
+                        const duration = Math.round(performance.now() - startTime);
+
+                        const statusText = `HTTP/1.1 ${response.status} ${response.statusText} (${duration} ms)`;
+                        const statusClass = response.ok ? 'term-success' : 'term-error';
+
+                        if (response.status === 204) {
+                            printOutput(cmd, `<div class="term-out"><span class="${statusClass}">${statusText}</span>\\n// 204 No Content (Operación ejecutada con éxito)</div>`);
                             return;
                         }
 
-                        const text = await res.text();
+                        const text = await response.text();
+                        let formattedBody = text;
                         try {
-                            const json = JSON.parse(text);
-                            responseJson.innerText = JSON.stringify(json, null, 2);
-                        } catch (e) {
-                            responseJson.innerText = text;
-                        }
+                            const parsed = JSON.parse(text);
+                            formattedBody = JSON.stringify(parsed, null, 2);
+                        } catch (err) {}
+
+                        printOutput(cmd, `<div class="term-out"><span class="${statusClass}">${statusText}</span>\\n<span class="text-secondary">&lt; Content-Type: ${response.headers.get('content-type') || 'application/json'}</span>\\n\\n${escapeHtml(formattedBody)}</div>`);
                     } catch (err) {
-                        statusBadge.className = 'badge bg-danger';
-                        statusBadge.innerText = 'Error de conexión';
-                        responseJson.innerText = err.toString();
+                        printOutput(cmd, `<div class="term-out term-error">curl: (7) Failed to connect: ${escapeHtml(err.message)}</div>`);
                     }
-                }
-
-                function crearProductoDemo() {
-                    runRequest('/productos/add', 'POST', {
-                        nombre: "Mouse Logitech MX Master 3S",
-                        categoria: "Perifericos",
-                        precio: 99.99,
-                        stock: 50,
-                        descripcion: "Mouse ergonomico inalambrico sensor 8K DPI"
-                    });
-                }
-
-                function actualizarProductoDemo() {
-                    runRequest('/productos/update', 'PUT', {
-                        id: 4,
-                        nombre: "Mouse Logitech MX Master 3S - Edicion Especial",
-                        categoria: "Perifericos",
-                        precio: 119.99,
-                        stock: 45,
-                        descripcion: "Mouse ergonomico actualizado con soporte multi-dispositivo"
-                    });
                 }
             </script>
         </body>
