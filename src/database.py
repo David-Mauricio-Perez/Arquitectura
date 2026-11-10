@@ -188,12 +188,12 @@ class CouchDb:
         fields: list[str] | None = None,
     ) -> list[dict[str, Any]]:
         """Get all documents in the database."""
+        target_fields = ['_id'] + [f for f in (fields or []) if f != '_id'] if fields else []
         selector: dict = {
-            'selector': {
-                '_id': {'$gt': None}
-            },
+            'selector': {},
         }
-        selector['fields'] = fields or []
+        if target_fields:
+            selector['fields'] = target_fields
 
         response = httpx.post(
             url=f'{self.url}/{database_name}/_find',

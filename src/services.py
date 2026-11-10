@@ -520,13 +520,17 @@ def get_user_recipes(user_id: str) -> sch.OutputStatus:
             database_name=config.USER_RECIPES_DB_NAME,
             document_id=user_id
         )
-        user_recipes = utils.deep_traversal(db_user_recipes, 'recipes')
+        user_recipes = utils.deep_traversal(db_user_recipes, 'recipes') or []
         output_status = ost.user_recipes_status()
         output_status.details.data = {
             'user_recipes': [sch.UserRecipe(**recipe) for recipe in user_recipes]
         }
         return output_status
     except httpx.HTTPStatusError as err:
+        if err.response.status_code == status.HTTP_404_NOT_FOUND:
+            output_status = ost.user_recipes_status()
+            output_status.details.data = {'user_recipes': []}
+            return output_status
         service_status = ost.error_retrieving_user_recipes_status()
         error_status = ost.http_error_status(error=err)
         error_status.status = service_status.status
