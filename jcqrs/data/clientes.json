@@ -1,0 +1,19 @@
+[ {
+  "id" : 1,
+  "razon" : "SOLITUX SRL",
+  "direccion" : "Av. San Juan 1234",
+  "email" : "ventas@solutixsrl.com.ar",
+  "movil" : "11-4422-7755"
+}, {
+  "id" : 2,
+  "razon" : "GRUPO TEXTIL SA",
+  "direccion" : "Rosario 7788",
+  "email" : "info@grupo-textil.com.ar",
+  "movil" : "11-3344-9911"
+}, {
+  "id" : 3,
+  "razon" : "ALUMINIUN METAL CO. SACIF",
+  "direccion" : "Triunvirato 8293",
+  "email" : "info@aluminiummetal.com.ar",
+  "movil" : "11-3322-4275"
+} ]

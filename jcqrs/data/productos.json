@@ -1,0 +1,29 @@
+[ {
+  "id" : 1,
+  "nombre" : "Laptop ThinkPad T14",
+  "categoria" : "Computación",
+  "precio" : 1250.0,
+  "stock" : 15,
+  "descripcion" : "Laptop empresarial Ryzen 7 32GB RAM"
+}, {
+  "id" : 2,
+  "nombre" : "Monitor Dell UltraSharp 27",
+  "categoria" : "Monitores",
+  "precio" : 450.0,
+  "stock" : 20,
+  "descripcion" : "Monitor 4K IPS profesional USB-C"
+}, {
+  "id" : 3,
+  "nombre" : "Teclado Mecánico Keychron K2",
+  "categoria" : "Periféricos",
+  "precio" : 95.0,
+  "stock" : 35,
+  "descripcion" : "Teclado inalámbrico switches Gateron Brown"
+}, {
+  "id" : 4,
+  "nombre" : "Auriculares Sony WH-1000XM5",
+  "categoria" : "Audio",
+  "precio" : 399.99,
+  "stock" : 18,
+  "descripcion" : "Cancelacion de ruido activa"
+} ]
