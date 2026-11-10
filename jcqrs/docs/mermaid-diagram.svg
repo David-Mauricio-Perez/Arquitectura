@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1165.254 1165.5" width="1165.254" height="1165.5" style="--bg:#18181B;--fg:#F4F4F5;--line:#71717A;--muted:#A1A1AA;--surface:#27272A;--border:#3F3F46;background:var(--bg)">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap');
+  text { font-family: 'Inter', system-ui, sans-serif; }
+  svg {
+    /* Derived from --bg and --fg (overridable via --line, --accent, etc.) */
+    --_text:          var(--fg);
+    --_text-sec:      var(--muted, color-mix(in srgb, var(--fg) 60%, var(--bg)));
+    --_text-muted:    var(--muted, color-mix(in srgb, var(--fg) 40%, var(--bg)));
+    --_text-faint:    color-mix(in srgb, var(--fg) 25%, var(--bg));
+    --_line:          var(--line, color-mix(in srgb, var(--fg) 50%, var(--bg)));
+    --_arrow:         var(--accent, color-mix(in srgb, var(--fg) 85%, var(--bg)));
+    --_node-fill:     var(--surface, color-mix(in srgb, var(--fg) 3%, var(--bg)));
+    --_node-stroke:   var(--border, color-mix(in srgb, var(--fg) 20%, var(--bg)));
+    --_group-fill:    var(--bg);
+    --_group-hdr:     color-mix(in srgb, var(--fg) 5%, var(--bg));
+    --_inner-stroke:  color-mix(in srgb, var(--fg) 12%, var(--bg));
+    --_key-badge:     color-mix(in srgb, var(--fg) 10%, var(--bg));
+  }
+</style>
+<defs>
+  <marker id="arrowhead" markerWidth="8" markerHeight="5" refX="7" refY="2.5" orient="auto">
+    <polygon points="0 0, 8 2.5, 0 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+  <marker id="arrowhead-start" markerWidth="8" markerHeight="5" refX="1" refY="2.5" orient="auto-start-reverse">
+    <polygon points="8 0, 0 2.5, 8 5" fill="var(--_arrow)" stroke="var(--_arrow)" stroke-width="0.75" stroke-linejoin="round" />
+  </marker>
+</defs>
+<g class="subgraph" data-id="Controller_Layer" data-label="Capa de Controladores">
+  <rect x="330.83149999999995" y="199.2" width="195.474" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="330.83149999999995" y="199.2" width="195.474" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="342.83149999999995" y="213.2" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">Capa de Controladores</text>
+</g>
+<g class="subgraph" data-id="Mediator_Layer" data-label="Mediator (Despachador Central)">
+  <rect x="322.31" y="424.40000000000003" width="212.51699999999997" height="96.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="322.31" y="424.40000000000003" width="212.51699999999997" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="334.31" y="438.40000000000003" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">Mediator (Despachador Central)</text>
+</g>
+<g class="subgraph" data-id="Queries_Read" data-label="Consultas / Queries (Lectura)">
+  <rect x="40" y="631.6" width="407.6959999999999" height="266.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="40" y="631.6" width="407.6959999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="52" y="645.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">Consultas / Queries (Lectura)</text>
+</g>
+<g class="subgraph" data-id="Commands_Write" data-label="Comandos / Commands (Escritura)">
+  <rect x="475.6959999999999" y="619.6" width="649.5579999999999" height="266.70000000000005" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="475.6959999999999" y="619.6" width="649.5579999999999" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="487.6959999999999" y="633.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">Comandos / Commands (Escritura)</text>
+</g>
+<g class="subgraph" data-id="Persistence_Layer" data-label="Persistencia / Store">
+  <rect x="470.92733333333325" y="1014.6" width="168.798" height="110.9" rx="0" ry="0" fill="var(--_group-fill)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <rect x="470.92733333333325" y="1014.6" width="168.798" height="28" rx="0" ry="0" fill="var(--_group-hdr)" stroke="var(--_node-stroke)" stroke-width="1" />
+  <text x="482.92733333333325" y="1028.6" font-size="12" font-weight="600" fill="var(--_text-sec)" dy="4.199999999999999">Persistencia / Store</text>
+</g>
+<polyline class="edge" data-from="Client" data-to="PC" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="HTTP GET / POST / PUT / DELETE" points="428.56850000000003,76.9 428.5684999999999,243.2" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="PC" data-to="MED" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Envía IRequest" points="428.5685,280.1 428.5685,468.40000000000003" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="MED" data-to="Queries_Read" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Despacha a QueryHandler" points="398.4823333333333,505.30000000000007 398.4823333333333,551.3000000000002 153.95999999999998,551.3000000000002 153.95999999999998,631.6000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="MED" data-to="Commands_Write" data-style="solid" data-arrow-start="false" data-arrow-end="true" data-label="Despacha a CommandHandler" points="458.6546666666666,505.30000000000007 458.6546666666666,539.3000000000001 703.1769999999999,539.3000000000001 703.1769999999999,619.6000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_All" data-to="STORE" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="Lee datos" points="112.22033333333334,791.4000000000001 112.22033333333334,809.4000000000001 100.91583333333332,809.4000000000001 100.91583333333331,996.6 509.7269999999999,996.6 509.7269999999999,1058.6" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_Id" data-to="STORE" data-style="dotted" data-arrow-start="false" data-arrow-end="true" data-label="Lee datos" points="371.5236666666666,791.4000000000001 371.5236666666666,809.4000000000001 380.3521666666666,809.4000000000001 380.3521666666666,984.6 532.5266666666666,984.6 532.5266666666666,1058.6" fill="none" stroke="var(--_line)" stroke-width="1" stroke-dasharray="4 4" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_Add" data-to="STORE" data-style="thick" data-arrow-start="false" data-arrow-end="true" data-label="Modifica estado" points="827.4736666666665,791.4000000000001 827.4736666666665,809.4000000000001 845.2319999999999,809.4000000000001 845.232,984.6 578.126,984.6 578.126,1058.6" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_Upd" data-to="STORE" data-style="thick" data-arrow-start="false" data-arrow-end="true" data-label="Modifica estado" points="1044.1416666666664,791.4000000000001 1044.1416666666664,952.3000000000001 992.3398333333332,952.3000000000001 992.3398333333332,996.6 600.9256666666665,996.6 600.9256666666665,1058.6" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_Del" data-to="STORE" data-style="thick" data-arrow-start="false" data-arrow-end="true" data-label="Elimina estado" points="555.3263333333332,791.4000000000001 555.3263333333332,1058.6" fill="none" stroke="var(--_line)" stroke-width="2" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Q_All" data-to="H_All" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="139.95999999999998,706.5 139.95999999999998,754.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="Q_Id" data-to="H_Id" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="341.80799999999994,706.5 341.80799999999994,754.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_All" data-to="R_DTO" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="139.96,791.4 139.96,815.4000000000001 239.89599999999996,815.4000000000001 239.89599999999996,839.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_Id" data-to="R_DTO" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="341.80799999999994,791.4 341.80799999999994,815.4000000000001 239.89599999999996,815.4000000000001 239.89599999999996,839.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="C_Add" data-to="H_Add" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="798.2519999999998,706.5 798.2519999999998,754.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="C_Upd" data-to="H_Upd" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="1011.9559999999998,706.5 1011.9559999999998,754.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="C_Del" data-to="H_Del" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="586.771,706.5 586.771,754.5" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_Add" data-to="W_Res" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="798.2519999999998,791.4 798.2519999999998,815.4000000000001 751.2719999999999,815.4000000000001 751.2719999999999,839.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_Upd" data-to="W_Res" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="1011.9559999999999,791.4 1011.9559999999999,815.4000000000001 751.2719999999999,815.4000000000001 751.2719999999999,839.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<polyline class="edge" data-from="H_Del" data-to="W_Res" data-style="solid" data-arrow-start="false" data-arrow-end="true" points="586.771,791.4 586.771,815.4000000000001 751.2719999999999,815.4000000000001 751.2719999999999,839.4000000000001" fill="none" stroke="var(--_line)" stroke-width="1" marker-end="url(#arrowhead)" />
+<g class="edge-label" data-from="Client" data-to="PC" data-label="HTTP GET / POST / PUT / DELETE">
+  <rect x="337.5684999999999" y="119.9" width="181.59399999999997" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="428.3654999999999" y="135.05" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">HTTP GET / POST / PUT / DELETE</text>
+</g>
+<g class="edge-label" data-from="PC" data-to="MED" data-label="Envía IRequest">
+  <rect x="382.5685" y="345.1" width="91.90000000000002" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="428.51849999999996" y="360.25" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Envía IRequest</text>
+</g>
+<g class="edge-label" data-from="MED" data-to="Queries_Read" data-label="Despacha a QueryHandler">
+  <rect x="81.95999999999997" y="558.3000000000001" width="143.578" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="153.74899999999997" y="573.45" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Despacha a QueryHandler</text>
+</g>
+<g class="edge-label" data-from="MED" data-to="Commands_Write" data-label="Despacha a CommandHandler">
+  <rect x="623.1769999999999" y="546.3000000000001" width="159.022" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="702.6879999999999" y="561.45" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Despacha a CommandHandler</text>
+</g>
+<g class="edge-label" data-from="H_All" data-to="STORE" data-label="Lee datos">
+  <rect x="68.4158333333333" y="959.3" width="64.57600000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="100.70383333333331" y="974.4499999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Lee datos</text>
+</g>
+<g class="edge-label" data-from="H_Id" data-to="STORE" data-label="Lee datos">
+  <rect x="347.8521666666666" y="947.3" width="64.57600000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="380.14016666666663" y="962.4499999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Lee datos</text>
+</g>
+<g class="edge-label" data-from="H_Add" data-to="STORE" data-label="Modifica estado">
+  <rect x="799.232" y="947.3" width="91.30600000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="844.885" y="962.4499999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Modifica estado</text>
+</g>
+<g class="edge-label" data-from="H_Upd" data-to="STORE" data-label="Modifica estado">
+  <rect x="946.3398333333332" y="959.3" width="91.30600000000001" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="991.9928333333332" y="974.4499999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Modifica estado</text>
+</g>
+<g class="edge-label" data-from="H_Del" data-to="STORE" data-label="Elimina estado">
+  <rect x="512.8263333333332" y="935.3" width="84.772" height="30.3" rx="2" ry="2" fill="var(--bg)" stroke="var(--_inner-stroke)" stroke-width="1" />
+  <text x="555.2123333333332" y="950.4499999999999" text-anchor="middle" font-size="11" font-weight="400" fill="var(--_text-sec)" dy="3.8499999999999996">Elimina estado</text>
+</g>
+<g class="node" data-id="Client" data-label="Cliente / Frontend" data-shape="stadium">
+  <rect x="356.094" y="40" width="144.949" height="36.900000000000006" rx="18.450000000000003" ry="18.450000000000003" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="428.5685" y="58.45" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Cliente / Frontend</text>
+</g>
+<g class="node" data-id="PC" data-label="ProductosController" data-shape="rectangle">
+  <rect x="346.83149999999995" y="243.2" width="163.474" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="428.5685" y="261.65" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosController</text>
+</g>
+<g class="node" data-id="MED" data-label="Mediator.send(request)" data-shape="rectangle">
+  <rect x="338.31" y="468.40000000000003" width="180.51699999999997" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="428.5685" y="486.85" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Mediator.send(request)</text>
+</g>
+<g class="node" data-id="Q_All" data-label="ProductosAllRequest" data-shape="rectangle">
+  <rect x="56" y="669.6" width="167.92" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="139.95999999999998" y="688.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosAllRequest</text>
+</g>
+<g class="node" data-id="H_All" data-label="ProductosAllHandler" data-shape="rectangle">
+  <rect x="56.74100000000001" y="754.5" width="166.438" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="139.96" y="772.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosAllHandler</text>
+</g>
+<g class="node" data-id="Q_Id" data-label="ProductosByIdRequest" data-shape="rectangle">
+  <rect x="251.91999999999996" y="669.6" width="179.77599999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="341.80799999999994" y="688.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosByIdRequest</text>
+</g>
+<g class="node" data-id="H_Id" data-label="ProductosByIdHandler" data-shape="rectangle">
+  <rect x="252.66099999999994" y="754.5" width="178.29399999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="341.80799999999994" y="772.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosByIdHandler</text>
+</g>
+<g class="node" data-id="R_DTO" data-label="ProductosResponse (DTO)" data-shape="rectangle">
+  <rect x="139.26349999999996" y="839.4000000000001" width="201.265" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="239.89599999999996" y="857.8500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosResponse (DTO)</text>
+</g>
+<g class="node" data-id="C_Add" data-label="ProductosAddRequest" data-shape="rectangle">
+  <rect x="709.8459999999999" y="669.6" width="176.81199999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="798.2519999999998" y="688.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosAddRequest</text>
+</g>
+<g class="node" data-id="H_Add" data-label="ProductosAddHandler" data-shape="rectangle">
+  <rect x="710.5869999999999" y="754.5" width="175.32999999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="798.2519999999998" y="772.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosAddHandler</text>
+</g>
+<g class="node" data-id="C_Upd" data-label="ProductosUpdateRequest" data-shape="rectangle">
+  <rect x="914.6579999999999" y="669.6" width="194.59599999999995" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1011.9559999999999" y="688.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosUpdateRequest</text>
+</g>
+<g class="node" data-id="H_Upd" data-label="ProductosUpdateHandler" data-shape="rectangle">
+  <rect x="915.3989999999999" y="754.5" width="193.11399999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="1011.9559999999999" y="772.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosUpdateHandler</text>
+</g>
+<g class="node" data-id="C_Del" data-label="ProductosDeleteRequest" data-shape="rectangle">
+  <rect x="491.6959999999999" y="669.6" width="190.14999999999998" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="586.771" y="688.0500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosDeleteRequest</text>
+</g>
+<g class="node" data-id="H_Del" data-label="ProductosDeleteHandler" data-shape="rectangle">
+  <rect x="492.4369999999999" y="754.5" width="188.668" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="586.771" y="772.95" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosDeleteHandler</text>
+</g>
+<g class="node" data-id="W_Res" data-label="Resultado (ID / Status)" data-shape="rectangle">
+  <rect x="667.3119999999999" y="839.4000000000001" width="167.92" height="36.900000000000006" rx="0" ry="0" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="751.2719999999999" y="857.8500000000001" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">Resultado (ID / Status)</text>
+</g>
+<g class="node" data-id="STORE" data-label="ProductosStore" data-shape="cylinder">
+  <rect x="486.92733333333325" y="1065.6" width="136.798" height="36.900000000000006" fill="var(--_node-fill)" stroke="none" />
+  <line x1="486.92733333333325" y1="1065.6" x2="486.92733333333325" y2="1102.5" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <line x1="623.7253333333333" y1="1065.6" x2="623.7253333333333" y2="1102.5" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <ellipse cx="555.3263333333332" cy="1102.5" rx="68.399" ry="7" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <ellipse cx="555.3263333333332" cy="1065.6" rx="68.399" ry="7" fill="var(--_node-fill)" stroke="var(--_node-stroke)" stroke-width="0.75" />
+  <text x="555.3263333333332" y="1084.05" text-anchor="middle" font-size="13" font-weight="500" fill="var(--_text)" dy="4.55">ProductosStore</text>
+</g>
+</svg>
