@@ -5,6 +5,7 @@ import json
 from datetime import datetime, UTC
 from enum import IntEnum, StrEnum
 from typing import Annotated, Any, Self
+from uuid import uuid4
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import AwareDatetime, BaseModel, computed_field, EmailStr, Field, JsonValue, SecretStr
@@ -275,3 +276,34 @@ class RecipePurchaseRequestInfo(BaseModel):
     user_name: str = Field(min_length=1, max_length=NAME_MAX_LENGTH)
     recipe_id: str = Field(min_length=1, max_length=NAME_MAX_LENGTH)
     recipe_name: str = Field(min_length=1, max_length=NAME_MAX_LENGTH)
+
+
+# --------------------------------------------------------------------------------------------------
+#   Reviews and Ratings functionality
+# --------------------------------------------------------------------------------------------------
+class RecipeReviewCreate(BaseModel):
+    """Payload to create a review for a recipe."""
+    rating: int = Field(ge=1, le=5, description='Score between 1 and 5')
+    comment: str = Field(min_length=1, max_length=LARGE_TEXT_MAX_LENGTH)
+
+
+class RecipeReview(BaseModel):
+    """Recipe review schema."""
+    id: str = Field(default_factory=lambda: str(uuid4()))
+    recipe_id: str = Field(min_length=1, max_length=NAME_MAX_LENGTH)
+    user_id: EmailStr
+    rating: int = Field(ge=1, le=5)
+    comment: str
+    created_at: AwareDatetime = Field(default_factory=lambda: datetime.now(tz=UTC))
+
+    def to_json(self, *args, **kwargs) -> dict:
+        return jsonable_encoder(self.model_dump(*args, **kwargs))
+
+
+class RecipeReviewEventInfo(BaseModel):
+    """Event message payload when a review is submitted."""
+    review_id: str
+    recipe_id: str
+    user_id: EmailStr
+    rating: int
+    created_at: AwareDatetime

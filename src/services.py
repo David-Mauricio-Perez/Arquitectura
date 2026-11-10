@@ -53,6 +53,10 @@ CONSUMERS_SUBSCRIPTIONS = (
         topic_name='purchase-status-changed',
         consumer_service_name='notify_recipe_state_change'
     ),
+    ps.Subscription(
+        topic_name='recipe-reviewed',
+        consumer_service_name='notify_recipe_review'
+    ),
 )
 
 services_executor = ThreadPoolExecutor(max_workers=config.PAYMENT_PROVIDER_MAX_WORKERS)
@@ -866,4 +870,104 @@ def notify_recipe_state_change(
     # On tests there is no channel or method because the parameters are mocked
     if channel:
         # Acknowledging the message.
+        channel.basic_ack(delivery_tag=method.delivery_tag)
+
+
+# ==================================================================================================
+#   Recipe Reviews functionality
+# ==================================================================================================
+def create_recipe_review(
+    recipe_id: str,
+    user_id: str,
+    review_data: sch.RecipeReviewCreate,
+) -> sch.OutputStatus:
+    """Creates a new review for a recipe, stores it, and publishes a review event."""
+    recipe_status = get_specific_recipe(recipe_id=recipe_id)
+    if recipe_status.error:
+        return ost.review_recipe_not_found_status()
+
+    review = sch.RecipeReview(
+        recipe_id=recipe_id,
+        user_id=user_id,
+        rating=review_data.rating,
+        comment=review_data.comment,
+    )
+    db_review = review.to_json()
+    review_id = db_review.pop('id')
+
+    try:
+        db.upsert_document(
+            database_name=config.REVIEWS_DB_NAME,
+            document_id=review_id,
+            fields=db_review
+        )
+    except httpx.HTTPStatusError as err:
+        return ost.http_error_status(error=err)
+
+    review_producer = ps.PubSub()
+    message = sch.RecipeReviewEventInfo(
+        review_id=review_id,
+        recipe_id=recipe_id,
+        user_id=user_id,
+        rating=review.rating,
+        created_at=review.created_at
+    ).model_dump_json()
+
+    try:
+        review_producer.publish(topic='recipe-reviewed', message=message)
+    except MessagePublishingConfirmationError as err:
+        log.error(str(err))
+
+    output = ost.review_created_status()
+    output.details.data = {'review': review.to_json()}
+    return output
+
+
+def get_recipe_reviews(recipe_id: str) -> sch.OutputStatus:
+    """Retrieves all reviews associated with a specific recipe."""
+    try:
+        all_reviews = db.get_all_documents(
+            database_name=config.REVIEWS_DB_NAME,
+            fields=['_id', 'recipe_id', 'user_id', 'rating', 'comment', 'created_at']
+        )
+        matching_reviews = [
+            sch.RecipeReview(
+                id=doc['_id'],
+                recipe_id=doc['recipe_id'],
+                user_id=doc['user_id'],
+                rating=doc['rating'],
+                comment=doc['comment'],
+                created_at=doc['created_at']
+            ).to_json()
+            for doc in all_reviews
+            if doc.get('recipe_id') == recipe_id
+        ]
+        output = ost.recipe_reviews_status()
+        output.details.data = {'reviews': matching_reviews}
+        return output
+    except httpx.HTTPStatusError as err:
+        error_status = ost.http_error_status(error=err)
+        error_status.status = 'error_retrieving_recipe_reviews'
+        error_status.details.description = 'An error occurred while retrieving recipe reviews.'
+        return error_status
+
+
+def notify_recipe_review(
+    channel: BlockingChannel,
+    method: Basic.Deliver,
+    properties: BasicProperties,
+    body: bytes
+) -> None:
+    """Consumer callback: notifies the user via SSE when their review is published."""
+    review_event = sch.RecipeReviewEventInfo.model_validate_json(body)
+
+    notification = sch.Notification(
+        event_name='recipe-reviewed',
+        user_id=review_event.user_id,
+        data=review_event.model_dump()
+    )
+
+    notifications_manager.put(user_id=review_event.user_id, data=notification.model_dump())
+
+    if channel:
         channel.basic_ack(delivery_tag=method.delivery_tag)

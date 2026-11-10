@@ -54,6 +54,7 @@ EMAIL_CONFIRMATION_DB_NAME = f'{DB_PREFIX}email-confirmation'
 RECIPES_DB_NAME = f'{DB_PREFIX}recipe'
 USER_RECIPES_DB_NAME = f'{DB_PREFIX}user-recipe'
 PAYMENT_DB_NAME = f'{DB_PREFIX}payment'
+REVIEWS_DB_NAME = f'{DB_PREFIX}review'
 
 
 # --------------------------------------------------------------------------------------------------

@@ -505,3 +505,45 @@ def pprovider_api_key_error_status() -> sch.OutputStatus:
             description='Invalid API key.'
         ),
     )
+
+
+# ==================================================================================================
+#  Reviews functionality output status
+# ==================================================================================================
+def review_created_status() -> sch.OutputStatus:
+    return sch.OutputStatus(
+        status='review_created',
+        error=False,
+        details=sch.StatusDetails(
+            description='Recipe review created successfully.'
+        ),
+    )
+
+def review_recipe_not_found_status() -> sch.OutputStatus:
+    return sch.OutputStatus(
+        status='review_recipe_not_found',
+        error=True,
+        details=sch.StatusDetails(
+            description='Cannot review a recipe that does not exist.',
+            error_code=404
+        ),
+    )
+
+def recipe_reviews_status() -> sch.OutputStatus:
+    return sch.OutputStatus(
+        status='recipe_reviews_retrieved',
+        error=False,
+        details=sch.StatusDetails(
+            description='Recipe reviews retrieved successfully.'
+        ),
+    )
+
+def error_retrieving_recipe_reviews_status() -> sch.OutputStatus:
+    return sch.OutputStatus(
+        status='error_retrieving_recipe_reviews',
+        error=True,
+        details=sch.StatusDetails(
+            description='An error occurred while retrieving recipe reviews.',
+            error_code=500
+        ),
+    )

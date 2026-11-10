@@ -472,3 +472,47 @@ async def notifications(
     user_id = token_status.details.data.get('sub', '')
 
     return EventSourceResponse(content=srv.notifications_manager.generate(user_id=user_id))
+
+
+# ==================================================================================================
+#  Recipe Reviews functionality
+# ==================================================================================================
+@app.post('/recipes/{recipe_id}/reviews')
+def add_recipe_review(
+    recipe_id: str,
+    review_data: sch.RecipeReviewCreate,
+    token: Annotated[str, Depends(oauth2_scheme)]
+) -> JSONResponse:
+    """Add a review and rating to a recipe."""
+    token_status = srv.handle_token(token=token)
+    if token_status.status in ('invalid_token', 'expired_token'):
+        return JSONResponse(
+            content=token_status.model_dump(),
+            status_code=status.HTTP_401_UNAUTHORIZED
+        )
+    user_id = token_status.details.data.get('sub', '')
+
+    review_status = srv.create_recipe_review(
+        recipe_id=recipe_id,
+        user_id=user_id,
+        review_data=review_data
+    )
+
+    if review_status.error:
+        status_code = review_status.details.error_code or status.HTTP_400_BAD_REQUEST
+    else:
+        status_code = status.HTTP_201_CREATED
+
+    return JSONResponse(content=review_status.model_dump(), status_code=status_code)
+
+
+@app.get('/recipes/{recipe_id}/reviews')
+def get_recipe_reviews(recipe_id: str) -> JSONResponse:
+    """Get all reviews for a recipe."""
+    reviews_status = srv.get_recipe_reviews(recipe_id=recipe_id)
+    if reviews_status.error:
+        status_code = reviews_status.details.error_code or status.HTTP_400_BAD_REQUEST
+    else:
+        status_code = status.HTTP_200_OK
+
+    return JSONResponse(content=reviews_status.model_dump(), status_code=status_code)

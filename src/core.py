@@ -57,6 +57,13 @@ APP_DATABASES_INFO = [
             )
         ]
     ),
+    DatabaseInfo(
+        name=config.REVIEWS_DB_NAME,
+        indexes=[
+            Index(name=f'{config.REVIEWS_DB_NAME}-id--index', fields=['_id']),
+            Index(name=f'{config.REVIEWS_DB_NAME}-recipe-id--index', fields=['recipe_id']),
+        ]
+    ),
 ]
 
 # ==================================================================================================
